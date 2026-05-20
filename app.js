@@ -565,9 +565,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    function copyTextToClipboard(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text);
+        }
+
+        return new Promise((resolve, reject) => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '-9999px';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            try {
+                const copied = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                copied ? resolve() : reject(new Error('Không thể sao chép nội dung'));
+            } catch (err) {
+                document.body.removeChild(textarea);
+                reject(err);
+            }
+        });
+    }
+
+    function showZaloRedirectToast(copied) {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '25px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = '#0068ff';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '50px';
+        toast.style.zIndex = '10000';
+        toast.style.fontSize = '0.92rem';
+        toast.style.boxShadow = '0 8px 25px rgba(0, 104, 255, 0.4)';
+        toast.style.pointerEvents = 'none';
+        toast.style.textAlign = 'center';
+        toast.style.fontWeight = '500';
+        toast.textContent = copied
+            ? 'Đã sao chép thông tin vé. Đang mở Zalo...'
+            : 'Đang mở Zalo. Nếu chưa thấy nội dung, vui lòng dán tin nhắn đã soạn.';
+        document.body.appendChild(toast);
+        return toast;
+    }
+
     // Zalo booking redirect logic
     if (btnZaloBooking) {
         btnZaloBooking.addEventListener('click', () => {
+            const zaloUrl = 'https://zalo.me/0334109119';
             const routeLabel = ROUTE_LABELS[bookingData.route] || 'Vé Cáp Treo';
             const isNight = bookingData.isNightTicket;
             const category = bookingData.category;
@@ -609,34 +661,23 @@ document.addEventListener('DOMContentLoaded', () => {
             detailsText += `\n- Tổng tiền dự tính: ${formatVND(bookingData.totalPrice)}`;
             detailsText += `\n\nPhản hồi tư vấn xuất vé giúp tôi qua Zalo nhé. Xin cảm ơn!`;
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(detailsText).then(() => {
-                const toast = document.createElement('div');
-                toast.style.position = 'fixed';
-                toast.style.bottom = '25px';
-                toast.style.left = '50%';
-                toast.style.transform = 'translateX(-50%)';
-                toast.style.background = '#0068ff';
-                toast.style.color = '#fff';
-                toast.style.padding = '12px 24px';
-                toast.style.borderRadius = '50px';
-                toast.style.zIndex = '10000';
-                toast.style.fontSize = '0.92rem';
-                toast.style.boxShadow = '0 8px 25px rgba(0, 104, 255, 0.4)';
-                toast.style.pointerEvents = 'none';
-                toast.style.textAlign = 'center';
-                toast.style.fontWeight = '500';
-                toast.textContent = 'Đã sao chép thông tin vé thành công! Đang chuyển tiếp qua Zalo...';
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.remove();
-                    window.open('https://zalo.me/0334109119', '_blank');
-                }, 1500);
-            }).catch(err => {
-                console.error('Lỗi copy clipboard:', err);
-                window.open('https://zalo.me/0334109119', '_blank');
-            });
+            btnZaloBooking.disabled = true;
+            btnZaloBooking.style.opacity = '0.82';
+
+            copyTextToClipboard(detailsText)
+                .then(() => {
+                    showZaloRedirectToast(true);
+                    setTimeout(() => {
+                        window.location.assign(zaloUrl);
+                    }, 650);
+                })
+                .catch(err => {
+                    console.error('Lỗi copy clipboard:', err);
+                    showZaloRedirectToast(false);
+                    setTimeout(() => {
+                        window.location.assign(zaloUrl);
+                    }, 650);
+                });
         });
     }
 
