@@ -3126,15 +3126,51 @@ header.scrolled {
 .schedule-container {
     border-radius: 8px !important;
     box-shadow: var(--shadow-md) !important;
+    max-width: 880px !important;
 }
 
 .schedule-table th {
     background: #17613a !important;
 }
 
+.schedule-table {
+    min-width: 560px !important;
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 10px 14px !important;
+    font-size: 0.9rem !important;
+    line-height: 1.25 !important;
+}
+
 .schedule-table td,
 .tab-table td {
     line-height: 1.5;
+}
+
+.schedule-table td:first-child {
+    font-size: 0.92rem !important;
+    white-space: nowrap;
+}
+
+.schedule-table th {
+    font-size: 0.94rem !important;
+    letter-spacing: 0.2px !important;
+    white-space: nowrap;
+}
+
+.schedule-table td i {
+    width: 18px !important;
+    margin-right: 6px !important;
+    font-size: 0.96rem !important;
+}
+
+.schedule-table span {
+    padding: 3px 9px !important;
+    border-radius: 999px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.2 !important;
 }
 
 .pricing-card {
@@ -3447,6 +3483,7 @@ header.scrolled {
         border-radius: 0 !important;
         border-left: 0 !important;
         border-right: 0 !important;
+        max-width: none !important;
     }
 
     .tab-table-container {
@@ -3605,6 +3642,26 @@ header.scrolled {
     .schedule-table th,
     .schedule-table td {
         white-space: nowrap !important;
+    }
+
+    .schedule-table {
+        min-width: 520px !important;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 8px 10px !important;
+        font-size: 0.78rem !important;
+    }
+
+    .schedule-table td:first-child {
+        font-size: 0.8rem !important;
+    }
+
+    .schedule-table td i {
+        width: 15px !important;
+        margin-right: 5px !important;
+        font-size: 0.86rem !important;
     }
 
     .tab-table th:first-child,
