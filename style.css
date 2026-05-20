@@ -789,6 +789,104 @@ header .container {
     justify-content: center;
 }
 
+/* --- PRICING DETAIL TABS HEADER --- */
+.pricing-tabs-wrapper {
+    margin-top: 50px;
+}
+.pricing-detail-header {
+    margin-bottom: 25px;
+}
+.pricing-detail-title {
+    font-size: 1.5rem;
+    color: var(--dark-bg-main);
+    font-weight: 700;
+}
+.pricing-detail-desc {
+    font-size: 0.9rem;
+    color: var(--text-gray-dark);
+    margin: 5px 0 0 0;
+}
+
+/* --- TAB RULES GRID --- */
+.tab-rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.tab-rules-card {
+    background: #F7FAFC;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid #E2E8F0;
+}
+
+/* --- WIZARD HEADER & FORM LAYOUT --- */
+.wizard-header-center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: block;
+}
+.wizard-main-title {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+.wizard-title-icon {
+    color: var(--primary-gold);
+    margin-right: 10px;
+}
+.wizard-main-desc {
+    color: var(--text-gray-light);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Wizard form flex rows */
+.wizard-flex-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.wizard-col {
+    min-width: 0;
+}
+.wizard-col-sm {
+    flex: 1;
+    min-width: 180px;
+}
+.wizard-col-lg {
+    flex: 1.5;
+    min-width: 220px;
+}
+
+/* Wizard date row */
+.wizard-date-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.date-input-col {
+    flex: 1.2;
+    min-width: 150px;
+}
+.night-checkbox-col {
+    flex: 1;
+    min-width: 130px;
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+}
+.wowpass-checkbox-col {
+    flex: 1.5;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+}
+
 /* --- THE MULTI-STEP BOOKING WIZARD SYSTEM --- */
 .booking-wizard-container {
     background: var(--light-bg-card);
@@ -2515,6 +2613,18 @@ footer {
     }
 
     /* --- PRICING DETAIL TABS --- */
+    .pricing-tabs-wrapper {
+        margin-top: 30px;
+    }
+    .pricing-detail-header {
+        margin-bottom: 15px;
+    }
+    .pricing-detail-title {
+        font-size: 1.1rem;
+    }
+    .pricing-detail-desc {
+        font-size: 0.8rem;
+    }
     .pricing-tabs-nav {
         display: flex !important;
         flex-wrap: nowrap !important;
@@ -2556,9 +2666,12 @@ footer {
         font-size: 0.78rem;
     }
     /* Tab rules grid: force 1 column */
-    #tab-rules > div {
+    .tab-rules-grid {
         grid-template-columns: 1fr !important;
-        gap: 15px !important;
+        gap: 12px !important;
+    }
+    .tab-rules-card {
+        padding: 14px;
     }
 
     /* --- BOOKING WIZARD --- */
@@ -2566,29 +2679,25 @@ footer {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    .wizard-steps-header {
-        padding: 16px !important;
+    .wizard-main-title {
+        font-size: 1.1rem;
     }
-    .wizard-steps-header h3 {
-        font-size: 1.15rem !important;
-    }
-    .wizard-steps-header p {
-        font-size: 0.8rem !important;
+    .wizard-main-desc {
+        font-size: 0.78rem;
     }
     .wizard-content {
         padding: 16px !important;
     }
-    .wizard-input-group {
-        margin-bottom: 14px !important;
-        gap: 10px !important;
+    /* Force wizard flex rows to stack vertically */
+    .wizard-flex-row {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 14px;
     }
-    /* Force select dropdowns to full-width stacking */
-    .wizard-input-group[style*="display: flex"] {
-        flex-direction: column !important;
-    }
-    .wizard-input-group[style*="display: flex"] > div {
-        min-width: 100% !important;
-        flex: unset !important;
+    .wizard-col-sm,
+    .wizard-col-lg {
+        flex: unset;
+        min-width: 100%;
     }
     .wizard-label {
         font-size: 0.85rem;
@@ -2596,18 +2705,21 @@ footer {
     }
     .wizard-select, .wizard-input {
         padding: 10px 14px;
-        height: auto !important;
-        font-size: 0.9rem !important;
+        font-size: 0.9rem;
     }
     .wizard-date-row {
-        flex-direction: column !important;
-        gap: 12px !important;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+    .date-input-col {
+        flex: unset;
+        min-width: 100%;
     }
     .night-checkbox-col,
     .wowpass-checkbox-col {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        min-width: 100% !important;
+        padding-top: 0;
+        min-width: 100%;
     }
     /* Ticket counters - compact side-by-side */
     .ticket-selector-row {
