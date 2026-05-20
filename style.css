@@ -2898,3 +2898,771 @@ footer {
     }
 }
 
+/* =========================================================
+   2026 RESPONSIVE POLISH OVERRIDES
+   Cleaner typography, tighter cards, stronger mobile layout
+   ========================================================= */
+:root {
+    --primary-gold: #b8892f;
+    --primary-gold-hover: #9f7424;
+    --primary-gold-light: rgba(184, 137, 47, 0.12);
+    --secondary-green: #17613a;
+    --secondary-green-light: #228552;
+    --dark-bg-main: #08130f;
+    --dark-bg-card: #11211a;
+    --dark-bg-navbar: rgba(8, 19, 15, 0.9);
+    --light-bg-main: #fbfaf7;
+    --light-bg-card: #ffffff;
+    --light-bg-section: #f3f6f1;
+    --text-gray-dark: #4d5b53;
+    --text-dark-main: #14211a;
+    --font-heading: 'Montserrat', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-body: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 8px;
+    --shadow-sm: 0 4px 14px rgba(20, 33, 26, 0.07);
+    --shadow-md: 0 16px 38px rgba(20, 33, 26, 0.12);
+    --shadow-lg: 0 28px 70px rgba(5, 18, 12, 0.28);
+    --transition-normal: 0.25s ease;
+}
+
+html {
+    scroll-padding-top: 84px;
+}
+
+body {
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
+}
+
+.container {
+    max-width: 1180px;
+}
+
+.section-padding {
+    padding: clamp(64px, 8vw, 104px) 0;
+}
+
+.section-title-wrapper {
+    margin-bottom: clamp(34px, 5vw, 58px);
+}
+
+.section-subtitle {
+    letter-spacing: 1.2px;
+    font-size: 0.78rem;
+}
+
+.section-title {
+    font-size: clamp(1.9rem, 3vw, 2.75rem);
+    letter-spacing: 0;
+}
+
+.section-desc {
+    max-width: 720px;
+    margin-inline: auto;
+    line-height: 1.75;
+}
+
+.btn-gold,
+.btn-zalo,
+.btn-outline {
+    min-height: 46px;
+    border-radius: 8px;
+    justify-content: center;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.btn-gold {
+    background: linear-gradient(135deg, #d9b25c, #b8892f);
+    color: #11170f;
+}
+
+.btn-outline {
+    background: #fff;
+}
+
+header {
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(8, 19, 15, 0.86), rgba(8, 19, 15, 0.3));
+}
+
+header.scrolled {
+    padding: 10px 0;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.logo-text h1 {
+    font-size: 1.18rem;
+    letter-spacing: 0;
+}
+
+.logo-text span {
+    letter-spacing: 0.4px;
+    text-transform: none;
+}
+
+.nav-menu {
+    gap: clamp(14px, 2vw, 26px);
+}
+
+.nav-link {
+    font-size: 0.9rem;
+}
+
+.hero-section {
+    min-height: 92vh;
+    padding-top: 118px;
+}
+
+.hero-bg-overlay {
+    opacity: 0.46;
+    background-position: center 42%;
+}
+
+.hero-gradient-overlay {
+    background:
+        linear-gradient(90deg, rgba(8, 19, 15, 0.94) 0%, rgba(8, 19, 15, 0.7) 46%, rgba(8, 19, 15, 0.35) 100%),
+        linear-gradient(180deg, rgba(8, 19, 15, 0.12), rgba(8, 19, 15, 0.95));
+}
+
+.hero-section .grid-2 {
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.82fr);
+    gap: clamp(34px, 5vw, 68px);
+}
+
+.hero-tagline {
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.hero-title {
+    font-size: clamp(2.55rem, 5.2vw, 4.75rem);
+    letter-spacing: 0;
+    max-width: 760px;
+}
+
+.hero-desc {
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    line-height: 1.8;
+}
+
+.hero-stats {
+    gap: clamp(18px, 4vw, 46px);
+}
+
+.stat-item h3 {
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+}
+
+.hero-booking-widget {
+    padding: clamp(24px, 3vw, 34px);
+    border-radius: 8px;
+}
+
+.booking-select,
+.booking-input,
+.wizard-select,
+.wizard-input {
+    min-height: 48px;
+    border-radius: 8px;
+}
+
+.routes-section {
+    background:
+        linear-gradient(180deg, #08130f, #102319 58%, #08130f);
+}
+
+.routes-tab-controls,
+.pricing-tabs-nav {
+    gap: 10px;
+}
+
+.routes-tab-btn,
+.pricing-tab-btn {
+    border-radius: 8px;
+    font-family: var(--font-body);
+    letter-spacing: 0;
+}
+
+.routes-tab-btn {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 0.98rem;
+}
+
+.routes-tab-btn.active {
+    background: rgba(184, 137, 47, 0.16);
+}
+
+.route-image-wrapper img {
+    height: clamp(320px, 42vw, 460px);
+}
+
+.route-spec-item,
+.pricing-card,
+.feature-box,
+.review-card,
+.faq-item,
+.booking-wizard-container,
+.tab-table-container,
+.wizard-summary-sidebar,
+.ticket-selector-row,
+.tab-rules-card {
+    border-radius: 8px;
+}
+
+.route-spec-item {
+    align-items: flex-start;
+}
+
+.schedule-container {
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+.schedule-table th {
+    background: #17613a !important;
+}
+
+.schedule-table td,
+.tab-table td {
+    line-height: 1.5;
+}
+
+.pricing-card {
+    padding: 30px 26px;
+}
+
+.pricing-card.featured {
+    transform: none;
+}
+
+.pricing-card:hover,
+.feature-box:hover {
+    transform: translateY(-4px);
+}
+
+.pricing-card-title,
+.feature-title,
+.route-title,
+.wizard-main-title {
+    letter-spacing: 0;
+}
+
+.price-item {
+    gap: 16px;
+}
+
+.price-value {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    white-space: nowrap;
+}
+
+.pricing-tabs-wrapper {
+    padding-top: 8px;
+}
+
+.pricing-tab-btn.active {
+    color: #fff;
+    background: var(--secondary-green);
+    border-color: var(--secondary-green);
+    box-shadow: 0 8px 22px rgba(23, 97, 58, 0.2);
+}
+
+.tab-table th {
+    background: #102319;
+}
+
+.booking-wizard-container {
+    max-width: 1040px;
+}
+
+.wizard-steps-header {
+    background:
+        linear-gradient(135deg, rgba(8, 19, 15, 0.96), rgba(23, 97, 58, 0.92));
+}
+
+.wizard-steps-header::after {
+    display: none;
+}
+
+.wizard-content {
+    padding: clamp(22px, 4vw, 40px);
+}
+
+.wizard-form-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(310px, 0.75fr);
+    gap: clamp(24px, 4vw, 40px);
+}
+
+.ticket-selector-row {
+    background: #fbfaf7;
+}
+
+.counter-controls {
+    background: #fff;
+    border: 1px solid #e2e8df;
+    border-radius: 8px;
+    padding: 4px;
+    gap: 8px;
+}
+
+.btn-counter {
+    border-radius: 6px;
+}
+
+.summary-item {
+    gap: 16px;
+}
+
+.summary-item-val {
+    white-space: normal;
+    text-align: right;
+}
+
+.summary-total-val {
+    color: var(--secondary-green);
+}
+
+.experience-section {
+    background: #fff;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr 0.85fr;
+    grid-auto-rows: 240px;
+    gap: 16px;
+}
+
+.experience-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #102319;
+    box-shadow: var(--shadow-sm);
+}
+
+.experience-item-large {
+    grid-row: span 2;
+}
+
+.experience-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+}
+
+.experience-item:hover img {
+    transform: scale(1.04);
+}
+
+.experience-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8, 19, 15, 0.04) 20%, rgba(8, 19, 15, 0.78) 100%);
+}
+
+.experience-caption {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    z-index: 1;
+    color: #fff;
+}
+
+.experience-caption span {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #f1cf83;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.experience-caption h3 {
+    font-size: clamp(1rem, 1.5vw, 1.28rem);
+}
+
+.reviews-section,
+.why-section {
+    background: var(--light-bg-section);
+}
+
+.review-card {
+    max-width: 880px;
+    margin-inline: auto;
+}
+
+.faq-header h4 {
+    line-height: 1.45;
+    padding-right: 18px;
+}
+
+.floating-widgets {
+    right: 22px;
+    bottom: 22px;
+}
+
+.float-btn {
+    border-radius: 8px;
+}
+
+@media (max-width: 1100px) {
+    .nav-cta {
+        display: none;
+    }
+
+    .hero-section .grid-2 {
+        grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
+    }
+}
+
+@media (max-width: 900px) {
+    header {
+        background: rgba(8, 19, 15, 0.94);
+        backdrop-filter: blur(14px);
+    }
+
+    .mobile-toggle {
+        display: inline-flex;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-menu {
+        position: fixed;
+        inset: 76px 14px auto 14px;
+        width: auto;
+        height: auto;
+        max-height: calc(100vh - 96px);
+        overflow-y: auto;
+        transform: translateY(-16px);
+        opacity: 0;
+        pointer-events: none;
+        left: 14px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        background: rgba(8, 19, 15, 0.98);
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 4px;
+    }
+
+    .nav-menu.active {
+        left: 14px;
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .nav-link {
+        padding: 13px 12px;
+        border-radius: 6px;
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-link.active {
+        color: #fff;
+        background: rgba(184, 137, 47, 0.18);
+    }
+
+    .hero-section {
+        min-height: auto;
+        padding-top: 108px;
+    }
+
+    .hero-section .grid-2,
+    .grid-2,
+    .route-details-grid,
+    .wizard-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .experience-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 220px;
+    }
+
+    .experience-item-large {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-inline: 16px;
+    }
+
+    .section-padding {
+        padding: 54px 0 !important;
+    }
+
+    .section-title {
+        font-size: clamp(1.55rem, 7vw, 2rem) !important;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 9vw, 3rem) !important;
+    }
+
+    .hero-desc {
+        font-size: 0.98rem;
+    }
+
+    .hero-stats {
+        gap: 10px;
+        padding-top: 18px;
+        margin-top: 28px;
+    }
+
+    .stat-item p {
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    .hero-booking-widget {
+        padding: 18px;
+    }
+
+    .routes-tab-controls,
+    .pricing-tabs-nav {
+        margin-inline: -16px;
+        padding-inline: 16px;
+    }
+
+    .routes-tab-btn,
+    .pricing-tab-btn {
+        min-height: 40px;
+    }
+
+    .route-image-wrapper img {
+        height: 260px;
+    }
+
+    .route-image-badge {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        text-align: center;
+    }
+
+    .pricing-card {
+        padding: 22px 18px !important;
+    }
+
+    .price-item {
+        align-items: flex-start;
+    }
+
+    .schedule-container {
+        margin-inline: -16px !important;
+        border-radius: 0 !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+    .tab-table-container {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .ticket-selector-row {
+        align-items: flex-start;
+    }
+
+    .counter-controls {
+        flex-shrink: 0;
+    }
+
+    .wizard-summary-sidebar {
+        padding: 18px !important;
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 230px;
+        gap: 12px;
+    }
+
+    .experience-item-large {
+        grid-column: auto;
+    }
+
+    .review-text {
+        font-size: 0.98rem;
+    }
+
+    .author-info h4,
+    .author-info p {
+        line-height: 1.35;
+    }
+}
+
+@media (max-width: 460px) {
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-text h1 {
+        font-size: 0.98rem;
+    }
+
+    .logo-text span {
+        max-width: 170px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .booking-input-wrapper i {
+        left: 12px;
+    }
+
+    .booking-select,
+    .booking-input {
+        padding-left: 38px;
+    }
+
+    .ticket-selector-row {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .counter-controls {
+        justify-self: start;
+    }
+
+    .summary-total {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .summary-total-val {
+        font-size: 1.18rem;
+        text-align: right;
+    }
+
+    .floating-widgets {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+
+/* Prevent table scrollbars and notes from clipping text on narrow screens. */
+.tab-table-container,
+.schedule-container > div {
+    scrollbar-color: rgba(184, 137, 47, 0.55) rgba(8, 19, 15, 0.08);
+    scrollbar-width: thin;
+}
+
+.tab-table-container::-webkit-scrollbar,
+.schedule-container > div::-webkit-scrollbar {
+    height: 6px;
+}
+
+.tab-table-container::-webkit-scrollbar-track,
+.schedule-container > div::-webkit-scrollbar-track {
+    background: rgba(8, 19, 15, 0.08);
+}
+
+.tab-table-container::-webkit-scrollbar-thumb,
+.schedule-container > div::-webkit-scrollbar-thumb {
+    background: rgba(184, 137, 47, 0.68);
+    border: 0;
+    border-radius: 999px;
+}
+
+.pricing-tab-pane > p {
+    clear: both;
+    margin: 14px 0 0 !important;
+    padding: 12px 14px;
+    border-left: 3px solid var(--primary-gold);
+    border-radius: 8px;
+    background: rgba(23, 97, 58, 0.06);
+    color: var(--text-gray-dark) !important;
+    line-height: 1.7 !important;
+}
+
+.tab-table th:first-child,
+.tab-table td:first-child {
+    min-width: 280px;
+}
+
+.tab-table td:first-child {
+    color: var(--text-dark-main);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .tab-table-container {
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+    }
+
+    .tab-table {
+        min-width: 720px;
+    }
+
+    .tab-table th,
+    .tab-table td {
+        white-space: normal !important;
+        vertical-align: top;
+    }
+
+    .tab-table th:not(:first-child),
+    .tab-table td:not(:first-child),
+    .schedule-table th,
+    .schedule-table td {
+        white-space: nowrap !important;
+    }
+
+    .tab-table th:first-child,
+    .tab-table td:first-child {
+        min-width: 250px;
+    }
+
+    .pricing-tab-pane > p {
+        margin-inline: 0 !important;
+        font-size: 0.86rem !important;
+    }
+}
