@@ -2329,17 +2329,6 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 768px) {
-    .pricing-tab-btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-    }
-    .tab-table th, .tab-table td {
-        padding: 12px 14px;
-        font-size: 0.85rem;
-    }
-}
-
 /* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 1024px) {
     .grid-3 {
@@ -2362,10 +2351,58 @@ footer {
 }
 
 @media (max-width: 768px) {
+    /* Horizontal scroll swipeable tabs for pricing navigation & route controls */
+    .pricing-tabs-nav,
+    .routes-tab-controls {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px !important;
+        margin-bottom: 25px !important;
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+        gap: 10px !important;
+        width: calc(100% + 40px) !important;
+        margin-left: -20px !important;
+        margin-right: -20px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    .pricing-tabs-nav::-webkit-scrollbar,
+    .routes-tab-controls::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome/Safari */
+    }
+    .pricing-tab-btn,
+    .routes-tab-btn {
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Override white-space on route summary so it wraps on mobile */
+    #summary-route {
+        white-space: normal !important;
+        text-align: right;
+        max-width: 180px;
+    }
+
+    /* Route specs grid single column on mobile */
+    .route-specs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .tab-table th, .tab-table td {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
     .schedule-table th, 
     .schedule-table td {
-        padding: 12px 14px !important;
-        font-size: 0.9rem;
+        padding: 10px 12px !important;
+        font-size: 0.8rem;
     }
 
     .grid-3 {
@@ -2381,9 +2418,12 @@ footer {
         gap: 15px;
     }
 
-    .night-checkbox-col {
+    .night-checkbox-col,
+    .wowpass-checkbox-col {
         align-self: flex-start;
-        padding-bottom: 0;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: -5px !important;
     }
 
     .grid-2 {
@@ -2398,7 +2438,7 @@ footer {
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     
     .mobile-toggle {
@@ -2462,24 +2502,53 @@ footer {
 
 @media (max-width: 480px) {
     .hero-booking-widget {
-        padding: 20px;
+        padding: 16px;
     }
 
     .ticket-selector-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
-        padding: 16px;
+        gap: 12px;
+        padding: 14px;
     }
 
     .counter-controls {
         align-self: flex-end;
     }
 
-    .section-title {
-        font-size: 2rem;
+    .hero-title {
+        font-size: 1.7rem !important;
+        line-height: 1.3 !important;
     }
-    
+
+    .hero-subtitle {
+        font-size: 0.9rem !important;
+    }
+
+    .section-title {
+        font-size: 1.4rem !important;
+    }
+
+    /* Highly compact tables for mobile screens */
+    .tab-table th, .tab-table td {
+        padding: 6px 8px !important;
+        font-size: 0.72rem !important;
+    }
+    .schedule-table th, 
+    .schedule-table td {
+        padding: 6px 8px !important;
+        font-size: 0.72rem !important;
+    }
+
+    /* Reduce card padding on smaller phones */
+    .pricing-card {
+        padding: 24px 16px !important;
+    }
+
+    .review-card {
+        padding: 24px 16px !important;
+    }
+
     .grid-3 {
         grid-template-columns: 1fr;
     }
@@ -2489,7 +2558,7 @@ footer {
     }
     
     .gallery-item.large-h, .gallery-item {
-        height: 220px;
+        height: 200px;
     }
     
     .payment-selector {
@@ -2524,10 +2593,16 @@ footer {
     }
     
     .wizard-steps-header {
-        padding: 20px;
+        padding: 15px 10px;
     }
     
     .step-label {
-        font-size: 0.65rem;
+        font-size: 0.6rem;
+    }
+
+    .pricing-tab-btn,
+    .routes-tab-btn {
+        padding: 6px 12px !important;
+        font-size: 0.78rem !important;
     }
 }
