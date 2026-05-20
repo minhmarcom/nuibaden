@@ -3170,6 +3170,24 @@ header.scrolled {
     padding-top: 8px;
 }
 
+.pricing-heading {
+    max-width: 1120px;
+}
+
+.pricing-heading .section-title {
+    font-size: clamp(1.9rem, 2.45vw, 2.35rem);
+    white-space: nowrap;
+}
+
+.pricing-heading .section-desc {
+    max-width: none;
+    width: 100%;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    line-height: 1.65;
+    text-wrap: balance;
+    white-space: nowrap;
+}
+
 .pricing-tab-btn.active {
     color: #fff;
     background: var(--secondary-green);
@@ -3402,6 +3420,22 @@ header.scrolled {
 
     .pricing-card {
         padding: 22px 18px !important;
+    }
+
+    .pricing-heading {
+        margin-bottom: 26px !important;
+    }
+
+    .pricing-heading .section-title {
+        font-size: clamp(1.08rem, 4.65vw, 1.55rem) !important;
+        line-height: 1.25;
+    }
+
+    .pricing-heading .section-desc {
+        max-width: 100%;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        white-space: normal;
     }
 
     .price-item {
