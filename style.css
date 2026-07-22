@@ -3576,6 +3576,299 @@ header.scrolled {
     }
 }
 
+/* Multi-item ticket calculator */
+.wizard-form-left,
+.wizard-form-right,
+.ticket-line-grid > *,
+.summary-ticket-line > * {
+    min-width: 0;
+}
+
+.wizard-steps-header.wizard-header-center {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.price-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+}
+
+.price-item .price-label {
+    min-width: 0;
+    line-height: 1.45;
+}
+
+.wizard-date-toolbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.wizard-date-toolbar .date-input-col {
+    flex: 1;
+}
+
+.calculator-reset-btn,
+.add-ticket-item-btn,
+.remove-ticket-item-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #d7ded9;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text-dark-main);
+    font-weight: 700;
+    transition: var(--transition-fast);
+}
+
+.calculator-reset-btn {
+    min-height: 48px;
+    padding: 0 16px;
+}
+
+.calculator-reset-btn:hover,
+.add-ticket-item-btn:hover {
+    border-color: var(--secondary-green);
+    color: var(--secondary-green);
+    background: #f5faf7;
+}
+
+.ticket-items-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.ticket-items-header .wizard-label {
+    margin-bottom: 2px;
+}
+
+.ticket-items-header p {
+    color: var(--text-gray-dark);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.ticket-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ticket-line-item {
+    border: 1px solid #dfe5e1;
+    border-radius: 8px;
+    background: #fbfcfb;
+    padding: 16px;
+}
+
+.ticket-line-heading,
+.ticket-line-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.ticket-line-heading {
+    margin-bottom: 12px;
+}
+
+.ticket-line-heading strong {
+    color: var(--secondary-green);
+    font-size: 0.92rem;
+}
+
+.remove-ticket-item-btn {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    color: #b83232;
+}
+
+.remove-ticket-item-btn:hover {
+    color: #fff;
+    background: #b83232;
+    border-color: #b83232;
+}
+
+.ticket-line-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr);
+    gap: 12px;
+}
+
+.ticket-line-grid label,
+.ticket-line-quantity {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ticket-line-grid label > span,
+.ticket-line-quantity > span {
+    color: var(--text-gray-dark);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.ticket-line-grid .wizard-select {
+    min-height: 44px;
+    padding: 9px 12px;
+    font-size: 0.86rem;
+    text-overflow: ellipsis;
+}
+
+.ticket-line-quantity .counter-controls {
+    align-self: flex-start;
+    min-height: 44px;
+}
+
+.ticket-line-footer {
+    padding-top: 14px;
+    margin-top: 14px;
+    border-top: 1px solid #e5e9e6;
+}
+
+.ticket-wowpass-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-gray-dark);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ticket-wowpass-option input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+
+.ticket-wowpass-option i {
+    color: #d59b00;
+}
+
+.ticket-line-price {
+    color: var(--secondary-green);
+    white-space: nowrap;
+}
+
+.add-ticket-item-btn {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 14px;
+    border-style: dashed;
+}
+
+.summary-ticket-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.summary-ticket-line {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.82rem;
+}
+
+.summary-ticket-line div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.summary-ticket-line strong,
+.summary-ticket-line span {
+    overflow-wrap: anywhere;
+}
+
+.summary-ticket-line div span {
+    color: var(--text-gray-dark);
+    line-height: 1.4;
+}
+
+.summary-ticket-line > span {
+    color: var(--secondary-green);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.wizard-main-title,
+.wizard-main-desc,
+.summary-title,
+.pricing-tab-btn,
+.tab-rules-card,
+.pricing-card-title,
+.price-label {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+    .wizard-date-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .calculator-reset-btn {
+        align-self: flex-end;
+    }
+
+    .ticket-line-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ticket-line-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ticket-line-price {
+        align-self: flex-end;
+    }
+
+    .summary-ticket-line {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-ticket-line > span {
+        justify-self: end;
+    }
+}
+
+@media (max-width: 420px) {
+    .ticket-line-item {
+        padding: 13px;
+    }
+
+    .calculator-reset-btn span {
+        display: inline;
+    }
+
+    .summary-total {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .summary-total-val {
+        font-size: 1.35rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
 /* Prevent table scrollbars and notes from clipping text on narrow screens. */
 .tab-table-container,
 .schedule-container > div {

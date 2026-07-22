@@ -114,14 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
             label: 'Combo Đỉnh + Chùa + Buffet'
         },
         
-        // Student Prices (Single Flat Rate)
-        'dinh_sv': { price: 300000, label: 'Vé SV Đỉnh Vân Sơn' },
-        'chua_sv': { price: 250000, label: 'Vé SV Chùa Hang' },
-        'taman_sv': { price: 300000, label: 'Vé SV Tuyến Tâm An' },
-        'combo_sv': { price: 400000, label: 'Combo SV Đỉnh + Chùa' },
-        'dinh_buffet_sv': { price: 500000, label: 'Combo SV Đỉnh + Buffet' },
-        'combo_buffet_sv_all': { price: 600000, label: 'Combo SV Đỉnh + Chùa + Buffet' },
-        
         // Local Resident (Tây Ninh) Prices
         'dinh_tn': { adult: 400000, child: 300000, label: 'Vé Tây Ninh Đỉnh Vân Sơn' },
         'chua_tn': { adult: 200000, child: 120000, label: 'Vé Tây Ninh Chùa Hang' },
@@ -153,14 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'food', text: 'Vé Ẩm Thực - 150k' },
             { value: 'cong', text: 'Vé cổng Khu du lịch - 10k/5k' }
         ],
-        'student': [
-            { value: 'dinh_sv', text: 'Vé SV Tuyến Đỉnh Vân Sơn (Khứ hồi) - 300k' },
-            { value: 'chua_sv', text: 'Vé SV Tuyến Chùa Hang (Khứ hồi) - 250k' },
-            { value: 'taman_sv', text: 'Vé SV Tuyến Cáp Tâm An (Khứ hồi) - 300k' },
-            { value: 'combo_sv', text: 'Combo SV Đỉnh + Chùa (Khứ hồi) - 400k' },
-            { value: 'dinh_buffet_sv', text: 'Combo SV Đỉnh + Buffet - 500k' },
-            { value: 'combo_buffet_sv_all', text: 'Combo SV Đỉnh + Chùa + Buffet - 600k' }
-        ],
         'local': [
             { value: 'dinh_tn', text: 'Vé Tây Ninh Đỉnh Vân Sơn (Khứ hồi) - 400k/300k' },
             { value: 'chua_tn', text: 'Vé Tây Ninh Chùa Hang (Khứ hồi) - 200k/120k' },
@@ -182,370 +166,195 @@ document.addEventListener('DOMContentLoaded', () => {
         'dinh_food_night': 'Combo Hoàng Hôn Đỉnh Vân Sơn + Ẩm Thực 17h',
         'combo_food_night': 'Combo Hoàng Hôn Đỉnh + Chùa Hang + Ẩm Thực 17h',
         'food': 'Vé Ẩm Thực',
-        
-        'dinh_sv': 'Vé SV Đỉnh Vân Sơn (Khứ hồi)',
-        'chua_sv': 'Vé SV Chùa Hang (Khứ hồi)',
-        'taman_sv': 'Vé SV Tuyến Tâm An (Khứ hồi)',
-        'combo_sv': 'Combo SV Đỉnh + Chùa (Khứ hồi)',
-        'dinh_buffet_sv': 'Combo SV Đỉnh + Buffet',
-        'combo_buffet_sv_all': 'Combo SV Đỉnh + Chùa + Buffet',
-        
         'dinh_tn': 'Vé Tây Ninh Đỉnh Vân Sơn (Khứ hồi)',
         'chua_tn': 'Vé Tây Ninh Chùa Hang (Khứ hồi)',
         'taman_tn': 'Vé Tây Ninh Tuyến Tâm An (Khứ hồi)',
         'combo_tn': 'Combo Tây Ninh Đỉnh + Chùa (Khứ hồi)'
     };
 
-    // Booking state
-    let bookingData = {
-        category: 'standard',
-        route: 'dinh',
-        date: '',
-        isNightTicket: false,
-        isWowPass: false,
-        adultQty: 1,
-        childQty: 0,
-        totalPrice: 0
+    const CUSTOMER_TYPES = {
+        standard_adult: { category: 'standard', age: 'adult', label: 'Khách du lịch - Người lớn' },
+        standard_child: { category: 'standard', age: 'child', label: 'Khách du lịch - Trẻ em' },
+        local_adult: { category: 'local', age: 'adult', label: 'Người Tây Ninh - Người lớn' },
+        local_child: { category: 'local', age: 'child', label: 'Người Tây Ninh - Trẻ em' }
     };
-
-    // DOM Elements
-    const categorySelect = document.getElementById('wizard-category');
-    const routeSelect = document.getElementById('wizard-route');
+    const NIGHT_ROUTES = ['dinh', 'chua', 'taman', 'combo'];
     const dateInput = document.getElementById('wizard-date');
-    const nightCheckbox = document.getElementById('wizard-night');
-    const wowpassCheckbox = document.getElementById('wizard-wowpass');
-    const adultQtyText = document.getElementById('qty-adult');
-    const childQtyText = document.getElementById('qty-child');
-    const btnAdultMinus = document.getElementById('btn-adult-minus');
-    const btnAdultPlus = document.getElementById('btn-adult-plus');
-    const btnChildMinus = document.getElementById('btn-child-minus');
-    const btnChildPlus = document.getElementById('btn-child-plus');
-    const btnZaloBooking = document.getElementById('btn-zalo-booking');
-    
-    // Summary DOM elements
-    const summaryRouteText = document.getElementById('summary-route');
+    const ticketItemsList = document.getElementById('ticket-items-list');
+    const addTicketItemBtn = document.getElementById('btn-add-ticket-item');
+    const resetCalculatorBtn = document.getElementById('btn-reset-calculator');
     const summaryDateText = document.getElementById('summary-date');
-    const summaryAdultText = document.getElementById('summary-adult-details');
-    const summaryChildText = document.getElementById('summary-child-details');
-    const summaryWowpassRow = document.getElementById('summary-wowpass-row');
-    const summaryWowpassText = document.getElementById('summary-wowpass-details');
+    const summaryTicketItems = document.getElementById('summary-ticket-items');
     const summaryTotalText = document.getElementById('summary-total-price');
-
-    // Initialize current date as default date
+    const btnZaloBooking = document.getElementById('btn-zalo-booking');
     const today = new Date().toISOString().split('T')[0];
-    if (dateInput) {
-        dateInput.value = today;
-        dateInput.min = today;
-        bookingData.date = today;
-    }
+    let nextTicketItemId = 1;
+    let bookingData = { date: today, items: [], totalPrice: 0 };
 
-    // Populate routes dropdown based on selected category
-    function populateRoutes(category) {
-        if (!routeSelect) return;
-        routeSelect.innerHTML = '';
-        
-        const routes = ROUTES_BY_CATEGORY[category] || [];
-        routes.forEach(route => {
-            const opt = document.createElement('option');
-            opt.value = route.value;
-            opt.textContent = route.text;
-            routeSelect.appendChild(opt);
-        });
-        
-        if (routes.length > 0) {
-            bookingData.route = routes[0].value;
-            routeSelect.value = routes[0].value;
-        }
-    }
-
-    // Toggle Night Checkbox display based on category and route availability
-    function updateNightCheckboxVisibility() {
-        const nightContainer = document.getElementById('night-checkbox-container');
-        const route = bookingData.route;
-        const cat = bookingData.category;
-        
-        const isNightAvailable = (cat === 'standard' && (route === 'dinh' || route === 'chua' || route === 'taman' || route === 'combo'));
-        
-        if (nightContainer) {
-            if (isNightAvailable) {
-                nightContainer.style.display = 'flex';
-            } else {
-                nightContainer.style.display = 'none';
-                bookingData.isNightTicket = false;
-                if (nightCheckbox) nightCheckbox.checked = false;
-            }
-        }
-    }
-
-    // Populate standard options on init
-    populateRoutes('standard');
-
-    // Event listeners for inputs
-    if (categorySelect) {
-        categorySelect.addEventListener('change', (e) => {
-            bookingData.category = e.target.value;
-            populateRoutes(bookingData.category);
-            
-            // Adjust UI for Student
-            const childRow = document.getElementById('child-counter-row');
-            const adultTitle = document.getElementById('adult-label-title');
-            const adultDesc = document.getElementById('adult-label-desc');
-            
-            if (bookingData.category === 'student') {
-                if (childRow) childRow.style.display = 'none';
-                bookingData.childQty = 0;
-                if (childQtyText) childQtyText.textContent = '0';
-                
-                if (adultTitle) adultTitle.textContent = 'Vé Sinh Viên';
-                if (adultDesc) adultDesc.textContent = 'Áp dụng cho học sinh, sinh viên có thẻ HSSV hợp lệ';
-            } else {
-                if (childRow) childRow.style.display = 'flex';
-                
-                if (adultTitle) adultTitle.textContent = 'Vé Người Lớn';
-                if (adultDesc) adultDesc.textContent = 'Du khách cao từ 1.4m trở lên';
-            }
-            
-            updateNightCheckboxVisibility();
-            calculateTotal();
-        });
-    }
-
-    if (routeSelect) {
-        routeSelect.addEventListener('change', (e) => {
-            bookingData.route = e.target.value;
-            updateNightCheckboxVisibility();
-            calculateTotal();
-        });
-    }
-
-    if (dateInput) {
-        dateInput.addEventListener('change', (e) => {
-            bookingData.date = e.target.value;
-            calculateTotal();
-        });
-    }
-
-    if (nightCheckbox) {
-        nightCheckbox.addEventListener('change', (e) => {
-            bookingData.isNightTicket = e.target.checked;
-            calculateTotal();
-        });
-    }
-
-    if (wowpassCheckbox) {
-        wowpassCheckbox.addEventListener('change', (e) => {
-            bookingData.isWowPass = e.target.checked;
-            calculateTotal();
-        });
-    }
-
-    // Counter buttons logic
-    if (btnAdultMinus && btnAdultPlus) {
-        btnAdultMinus.addEventListener('click', () => {
-            if (bookingData.adultQty > 1) {
-                bookingData.adultQty--;
-                adultQtyText.textContent = bookingData.adultQty;
-                calculateTotal();
-            }
-        });
-        btnAdultPlus.addEventListener('click', () => {
-            if (bookingData.adultQty < 99) {
-                bookingData.adultQty++;
-                adultQtyText.textContent = bookingData.adultQty;
-                calculateTotal();
-            }
-        });
-    }
-
-    if (btnChildMinus && btnChildPlus) {
-        btnChildMinus.addEventListener('click', () => {
-            if (bookingData.childQty > 0) {
-                bookingData.childQty--;
-                childQtyText.textContent = bookingData.childQty;
-                calculateTotal();
-            }
-        });
-        btnChildPlus.addEventListener('click', () => {
-            if (bookingData.childQty < 99) {
-                bookingData.childQty++;
-                childQtyText.textContent = bookingData.childQty;
-                calculateTotal();
-            }
-        });
-    }
-
-    // Helper: format currency
     function formatVND(amount) {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
     }
-
-    // Core Price calculation function
-    function calculateTotal() {
-        const route = bookingData.route;
-        const category = bookingData.category;
-        const isNight = bookingData.isNightTicket;
-        const dateVal = bookingData.date;
-        
-        let adultPrice = 0;
-        let childPrice = 0;
-        
-        // Determine weekday vs weekend
-        const d = new Date(dateVal);
-        const dayOfWeek = d.getDay(); // 0 = Sunday, 6 = Saturday
-        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-        
-        if (category === 'standard') {
-            if (isNight) {
-                const nightPrice = NIGHT_PRICES[route];
-                if (nightPrice) {
-                    adultPrice = nightPrice.adult;
-                    childPrice = nightPrice.child;
-                }
-            } else {
-                if (route === 'dinh_buffet' || route === 'combo_buffet') {
-                    const priceSet = isWeekend ? PRICES[route].weekend : PRICES[route].weekday;
-                    adultPrice = priceSet.adult;
-                    childPrice = priceSet.child;
-                } else {
-                    const priceSet = PRICES[route];
-                    if (priceSet) {
-                        adultPrice = priceSet.adult;
-                        childPrice = priceSet.child;
-                    }
-                }
-            }
-        } else if (category === 'student') {
-            const priceSet = PRICES[route];
-            if (priceSet) {
-                adultPrice = priceSet.price;
-                childPrice = 0;
-            }
-        } else if (category === 'local') {
-            const priceSet = PRICES[route];
-            if (priceSet) {
-                adultPrice = priceSet.adult;
-                childPrice = priceSet.child;
-            }
-        }
-        
-        const adultTotal = bookingData.adultQty * adultPrice;
-        const childTotal = bookingData.childQty * childPrice;
-        
-        let subtotal = adultTotal + childTotal;
-        let wowpassTotal = 0;
-        const wowpassQty = bookingData.adultQty + bookingData.childQty;
-        
-        if (bookingData.isWowPass) {
-            wowpassTotal = wowpassQty * 300000;
-        }
-        
-        bookingData.totalPrice = subtotal + wowpassTotal;
-
-        // Update UI counters disable states
-        if (btnAdultMinus) btnAdultMinus.disabled = bookingData.adultQty <= 1;
-        if (btnChildMinus) btnChildMinus.disabled = bookingData.childQty <= 0;
-
-        // Update Summary Panel
-        if (summaryRouteText) {
-            let labelSuffix = '';
-            if (category === 'standard') {
-                if (isNight) labelSuffix = ' (Vé sau 17h)';
-                else if (route === 'dinh_buffet' || route === 'combo_buffet') {
-                    labelSuffix = isWeekend ? ' (Buffet Cuối tuần)' : ' (Buffet Ngày thường)';
-                } else {
-                    labelSuffix = ' (Vé Ngày)';
-                }
-            } else if (category === 'student') {
-                labelSuffix = ' (Sinh Viên)';
-            } else if (category === 'local') {
-                labelSuffix = ' (Người Tây Ninh)';
-            }
-            summaryRouteText.textContent = (ROUTE_LABELS[route] || 'Vé Cáp Treo') + labelSuffix;
-        }
-        if (summaryDateText) {
-            const dateStr = !isNaN(d.getTime()) ? `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}` : dateVal;
-            summaryDateText.textContent = dateStr;
-        }
-        if (summaryAdultText) {
-            const labelText = category === 'student' ? 'Sinh viên' : 'Người lớn';
-            summaryAdultText.textContent = `${bookingData.adultQty} x ${formatVND(adultPrice)}`;
-            
-            const summaryAdultLabel = summaryAdultText.previousElementSibling || summaryAdultText.parentElement.querySelector('.summary-item-label');
-            if (summaryAdultLabel) {
-                summaryAdultLabel.textContent = `${labelText}:`;
-            }
-        }
-        if (summaryChildText) {
-            if (category !== 'student' && bookingData.childQty > 0) {
-                summaryChildText.parentElement.style.display = 'flex';
-                summaryChildText.textContent = `${bookingData.childQty} x ${formatVND(childPrice)}`;
-            } else {
-                summaryChildText.parentElement.style.display = 'none';
-            }
-        }
-        if (summaryWowpassRow && summaryWowpassText) {
-            if (bookingData.isWowPass) {
-                summaryWowpassRow.style.display = 'flex';
-                summaryWowpassText.textContent = `${wowpassQty} x ${formatVND(300000)}`;
-            } else {
-                summaryWowpassRow.style.display = 'none';
-            }
-        }
-        if (summaryTotalText) {
-            summaryTotalText.textContent = formatVND(bookingData.totalPrice);
-        }
+    function getRoutesForItem(item) {
+        const type = CUSTOMER_TYPES[item.customerType];
+        return ROUTES_BY_CATEGORY[type.category] || ROUTES_BY_CATEGORY.standard;
     }
 
-    // Run once at start to setup prices
-    calculateTotal();
+    function createTicketItem(route = 'dinh', customerType = 'standard_adult') {
+        const item = { id: nextTicketItemId++, customerType, route, time: 'day', quantity: 1, wowPass: false, unitPrice: 0, lineTotal: 0 };
+        const routes = getRoutesForItem(item);
+        if (!routes.some(option => option.value === route)) item.route = routes[0].value;
+        return item;
+    }
 
-    // Direct CTA navigation from anywhere to Booking Section
-    const startBookingCTA = (routeType = 'dinh') => {
-        let mappedRoute = routeType;
-        let mappedCategory = 'standard';
-        
-        if (routeType === 'dinh' || routeType === 'chua' || routeType === 'combo' || routeType === 'taman') {
-            mappedCategory = 'standard';
-            mappedRoute = routeType;
-        } else if (routeType.endsWith('_sv')) {
-            mappedCategory = 'student';
-            mappedRoute = routeType;
-        } else if (routeType.endsWith('_tn')) {
-            mappedCategory = 'local';
-            mappedRoute = routeType;
+    function getUnitPrice(item) {
+        const customer = CUSTOMER_TYPES[item.customerType];
+        if (!customer) return 0;
+        if (customer.category === 'standard' && item.time === 'night' && NIGHT_PRICES[item.route]) {
+            return NIGHT_PRICES[item.route][customer.age];
         }
-        
-        bookingData.category = mappedCategory;
-        if (categorySelect) categorySelect.value = mappedCategory;
-        
-        populateRoutes(mappedCategory);
-        
-        bookingData.route = mappedRoute;
-        if (routeSelect) routeSelect.value = mappedRoute;
-        
-        const childRow = document.getElementById('child-counter-row');
-        const adultTitle = document.getElementById('adult-label-title');
-        const adultDesc = document.getElementById('adult-label-desc');
-        
-        if (mappedCategory === 'student') {
-            if (childRow) childRow.style.display = 'none';
-            bookingData.childQty = 0;
-            if (childQtyText) childQtyText.textContent = '0';
-            if (adultTitle) adultTitle.textContent = 'Vé Sinh Viên';
-            if (adultDesc) adultDesc.textContent = 'Áp dụng cho học sinh, sinh viên có thẻ HSSV hợp lệ';
-        } else {
-            if (childRow) childRow.style.display = 'flex';
-            if (adultTitle) adultTitle.textContent = 'Vé Người Lớn';
-            if (adultDesc) adultDesc.textContent = 'Du khách cao từ 1.4m trở lên';
+        const priceSet = PRICES[item.route];
+        if (!priceSet) return 0;
+        if (priceSet.weekday && priceSet.weekend) {
+            const d = new Date(`${bookingData.date}T00:00:00`);
+            const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+            return (isWeekend ? priceSet.weekend : priceSet.weekday)[customer.age];
         }
-        
-        updateNightCheckboxVisibility();
+        return priceSet[customer.age] || 0;
+    }
+
+    function customerOptions(selected) {
+        return Object.entries(CUSTOMER_TYPES).map(([value, type]) =>
+            `<option value="${value}"${value === selected ? ' selected' : ''}>${type.label}</option>`
+        ).join('');
+    }
+
+    function routeOptions(item) {
+        return getRoutesForItem(item).map(route =>
+            `<option value="${route.value}"${route.value === item.route ? ' selected' : ''}>${route.text.replace(/ - .+$/, '')}</option>`
+        ).join('');
+    }
+
+    function renderTicketItems() {
+        if (!ticketItemsList) return;
+        ticketItemsList.innerHTML = bookingData.items.map((item, index) => {
+            const canUseNight = CUSTOMER_TYPES[item.customerType].category === 'standard' && NIGHT_ROUTES.includes(item.route);
+            if (!canUseNight) item.time = 'day';
+            return `<article class="ticket-line-item" data-item-id="${item.id}">
+                <div class="ticket-line-heading">
+                    <strong>Hạng mục ${index + 1}</strong>
+                    <button type="button" class="remove-ticket-item-btn" data-action="remove" title="Loại bỏ hạng mục ${index + 1}" aria-label="Loại bỏ hạng mục ${index + 1}">
+                        <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="ticket-line-grid">
+                    <label><span>Đối tượng</span><select class="wizard-select" data-field="customerType">${customerOptions(item.customerType)}</select></label>
+                    <label><span>Tuyến / dịch vụ</span><select class="wizard-select" data-field="route">${routeOptions(item)}</select></label>
+                    <label><span>Khung giờ</span><select class="wizard-select" data-field="time"${canUseNight ? '' : ' disabled'}>
+                        <option value="day"${item.time === 'day' ? ' selected' : ''}>Vé ngày</option>
+                        ${canUseNight ? `<option value="night"${item.time === 'night' ? ' selected' : ''}>Sau 17h</option>` : ''}
+                    </select></label>
+                    <div class="ticket-line-quantity"><span>Số lượng</span><div class="counter-controls">
+                        <button type="button" class="btn-counter" data-action="minus"${item.quantity <= 1 ? ' disabled' : ''} aria-label="Giảm số lượng"><i class="fa-solid fa-minus"></i></button>
+                        <span class="counter-value">${item.quantity}</span>
+                        <button type="button" class="btn-counter" data-action="plus" aria-label="Tăng số lượng"><i class="fa-solid fa-plus"></i></button>
+                    </div></div>
+                </div>
+                <div class="ticket-line-footer">
+                    <label class="ticket-wowpass-option"><input type="checkbox" data-field="wowPass"${item.wowPass ? ' checked' : ''}><span><i class="fa-solid fa-star" aria-hidden="true"></i> WOW PASS +300.000đ/vé</span></label>
+                    <strong class="ticket-line-price">${formatVND(item.lineTotal)}</strong>
+                </div>
+            </article>`;
+        }).join('');
+    }
+
+    function formatBookingDate() {
+        const d = new Date(`${bookingData.date}T00:00:00`);
+        return Number.isNaN(d.getTime()) ? bookingData.date : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+    }
+
+    function calculateTotal(renderItems = true) {
+        bookingData.totalPrice = 0;
+        bookingData.items.forEach(item => {
+            item.unitPrice = getUnitPrice(item);
+            item.lineTotal = item.quantity * (item.unitPrice + (item.wowPass ? 300000 : 0));
+            bookingData.totalPrice += item.lineTotal;
+        });
+        if (renderItems) renderTicketItems();
+        if (summaryDateText) summaryDateText.textContent = formatBookingDate();
+        if (summaryTicketItems) {
+            summaryTicketItems.innerHTML = bookingData.items.map((item, index) => {
+                const type = CUSTOMER_TYPES[item.customerType];
+                const timeLabel = item.time === 'night' ? 'Sau 17h' : 'Vé ngày';
+                return `<div class="summary-ticket-line">
+                    <div><strong>${index + 1}. ${ROUTE_LABELS[item.route] || 'Vé cáp treo'}</strong><span>${type.label} · ${timeLabel}${item.wowPass ? ' · WOW PASS' : ''}</span></div>
+                    <span>${item.quantity} x ${formatVND(item.unitPrice + (item.wowPass ? 300000 : 0))}</span>
+                </div>`;
+            }).join('');
+        }
+        if (summaryTotalText) summaryTotalText.textContent = formatVND(bookingData.totalPrice);
+    }
+
+    function resetCalculator(route = 'dinh') {
+        bookingData.items = [createTicketItem(route)];
+        bookingData.date = today;
+        if (dateInput) dateInput.value = today;
         calculateTotal();
-        
+    }
+
+    if (dateInput) {
+        dateInput.value = today;
+        dateInput.min = today;
+        dateInput.addEventListener('change', event => {
+            bookingData.date = event.target.value || today;
+            calculateTotal();
+        });
+    }
+    if (addTicketItemBtn) addTicketItemBtn.addEventListener('click', () => {
+        bookingData.items.push(createTicketItem());
+        calculateTotal();
+    });
+    if (resetCalculatorBtn) resetCalculatorBtn.addEventListener('click', () => resetCalculator());
+    if (ticketItemsList) {
+        ticketItemsList.addEventListener('change', event => {
+            const card = event.target.closest('[data-item-id]');
+            const item = card && bookingData.items.find(entry => entry.id === Number(card.dataset.itemId));
+            if (!item || !event.target.dataset.field) return;
+            const field = event.target.dataset.field;
+            item[field] = field === 'wowPass' ? event.target.checked : event.target.value;
+            if (field === 'customerType') {
+                const routes = getRoutesForItem(item);
+                if (!routes.some(route => route.value === item.route)) item.route = routes[0].value;
+            }
+            calculateTotal();
+        });
+        ticketItemsList.addEventListener('click', event => {
+            const button = event.target.closest('[data-action]');
+            const card = event.target.closest('[data-item-id]');
+            if (!button || !card) return;
+            const itemIndex = bookingData.items.findIndex(entry => entry.id === Number(card.dataset.itemId));
+            if (itemIndex < 0) return;
+            const action = button.dataset.action;
+            if (action === 'remove') {
+                bookingData.items.splice(itemIndex, 1);
+                if (!bookingData.items.length) bookingData.items.push(createTicketItem());
+            } else if (action === 'minus' && bookingData.items[itemIndex].quantity > 1) {
+                bookingData.items[itemIndex].quantity--;
+            } else if (action === 'plus' && bookingData.items[itemIndex].quantity < 99) {
+                bookingData.items[itemIndex].quantity++;
+            }
+            calculateTotal();
+        });
+    }
+
+    resetCalculator();
+
+    const startBookingCTA = (routeType = 'dinh') => {
+        const isLocal = routeType.endsWith('_tn');
+        const item = createTicketItem(routeType, isLocal ? 'local_adult' : 'standard_adult');
+        bookingData.items = [item];
+        calculateTotal();
         const bookingSection = document.getElementById('dat-ve');
-        if (bookingSection) {
-            bookingSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (bookingSection) bookingSection.scrollIntoView({ behavior: 'smooth' });
     };
 
     // Bind Hero banner buttons
@@ -556,10 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedRoute = document.getElementById('hero-route').value;
             const selectedDate = document.getElementById('hero-date').value;
             
-            bookingData.route = selectedRoute;
-            bookingData.date = selectedDate;
-            if (routeSelect) routeSelect.value = selectedRoute;
-            if (dateInput) dateInput.value = selectedDate;
+            bookingData.date = selectedDate || today;
+            if (dateInput) dateInput.value = bookingData.date;
             
             startBookingCTA(selectedRoute);
         });
@@ -629,44 +436,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnZaloBooking) {
         btnZaloBooking.addEventListener('click', () => {
             const zaloUrl = 'https://zalo.me/0334109119';
-            const routeLabel = ROUTE_LABELS[bookingData.route] || 'Vé Cáp Treo';
-            const isNight = bookingData.isNightTicket;
-            const category = bookingData.category;
-            
-            let categoryStr = 'Khách du lịch (Vé Cơ Bản)';
-            if (category === 'student') categoryStr = 'Vé Sinh Viên (Cần xuất trình thẻ HSSV)';
-            if (category === 'local') categoryStr = 'Vé Người dân Tây Ninh (Cần xuất trình CCCD)';
-            
-            const d = new Date(bookingData.date);
-            const dayOfWeek = d.getDay();
-            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-            let timeStr = 'Ngày thường';
-            
-            if (isNight) {
-                timeStr = 'Khung giờ sau 17h';
-            } else if (isWeekend && (bookingData.route === 'dinh_buffet' || bookingData.route === 'combo_buffet')) {
-                timeStr = 'Cuối tuần (Thứ 7 / CN)';
-            }
-            
-            const dateStr = !isNaN(d.getTime()) ? `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}` : bookingData.date;
-            
             let detailsText = `Chào đại lý Riviu Asia, tôi muốn đặt vé cáp treo Núi Bà Đen:\n`;
-            detailsText += `- Đối tượng: ${categoryStr}\n`;
-            detailsText += `- Tuyến: ${routeLabel}\n`;
-            detailsText += `- Ngày đi: ${dateStr} (${timeStr})\n`;
-            
-            if (category === 'student') {
-                detailsText += `- Số lượng: ${bookingData.adultQty} sinh viên`;
-            } else {
-                detailsText += `- Số lượng: ${bookingData.adultQty} người lớn`;
-                if (bookingData.childQty > 0) {
-                    detailsText += `, ${bookingData.childQty} trẻ em`;
-                }
-            }
-            if (bookingData.isWowPass) {
-                const totalTickets = bookingData.adultQty + bookingData.childQty;
-                detailsText += `\n- Dịch vụ đi kèm: WOW PASS Lối đi nhanh (${totalTickets} vé)`;
-            }
+            detailsText += `- Ngày đi: ${formatBookingDate()}\n`;
+            bookingData.items.forEach((item, index) => {
+                const customer = CUSTOMER_TYPES[item.customerType];
+                const timeLabel = item.time === 'night' ? 'sau 17h' : 'vé ngày';
+                detailsText += `- Hạng mục ${index + 1}: ${ROUTE_LABELS[item.route]} | ${customer.label} | ${timeLabel} | ${item.quantity} vé`;
+                if (item.wowPass) detailsText += ' | Có WOW PASS';
+                detailsText += ` | ${formatVND(item.lineTotal)}\n`;
+            });
             detailsText += `\n- Tổng tiền dự tính: ${formatVND(bookingData.totalPrice)}`;
             detailsText += `\n\nPhản hồi tư vấn xuất vé giúp tôi qua Zalo nhé. Xin cảm ơn!`;
 
