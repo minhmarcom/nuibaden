@@ -93,11 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Standard Basic Prices
         'cong':   { adult: 10000, child: 5000, label: 'Vé Cổng KDL' },
         'buffet': { adult: 300000, child: 200000, label: 'Vé Buffet Vân Sơn lẻ' },
+        'food':   { adult: 150000, child: 150000, label: 'Vé Ẩm Thực' },
         'dinh':   { adult: 450000, child: 350000, label: 'Vé Đỉnh Vân Sơn' },
         'chua':   { adult: 250000, child: 150000, label: 'Vé Chùa Hang' },
         'chua1c': { adult: 150000, child: 100000, label: 'Vé Chùa Hang 1 chiều' },
         'taman':  { adult: 450000, child: 350000, label: 'Vé Tuyến Cáp Tâm An' },
         'combo':  { adult: 650000, child: 500000, label: 'Vé Combo Đỉnh + Chùa' },
+        'dinh_food_night': { adult: 400000, child: 300000, label: 'Combo Hoàng Hôn Đỉnh + Ẩm Thực 17h' },
+        'combo_food_night': { adult: 500000, child: 400000, label: 'Combo Hoàng Hôn Đỉnh + Chùa + Ẩm Thực 17h' },
         
         // Standard Buffet Combos (Weekday vs Weekend pricing)
         'dinh_buffet': {
@@ -144,7 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
             { value: 'chua1c', text: 'Tuyến Chùa Hang (1 chiều) - 150k/100k' },
             { value: 'dinh_buffet', text: 'Combo Đỉnh Vân Sơn + Buffet - Từ 650k' },
             { value: 'combo_buffet', text: 'Combo Đỉnh + Chùa + Buffet - Từ 800k' },
+            { value: 'dinh_food_night', text: 'Combo Hoàng Hôn Đỉnh + Ẩm Thực 17h - 400k/300k' },
+            { value: 'combo_food_night', text: 'Combo Hoàng Hôn Đỉnh + Chùa + Ẩm Thực 17h - 500k/400k' },
             { value: 'buffet', text: 'Vé Buffet Vân Sơn lẻ - 300k/200k' },
+            { value: 'food', text: 'Vé Ẩm Thực - 150k' },
             { value: 'cong', text: 'Vé cổng Khu du lịch - 10k/5k' }
         ],
         'student': [
@@ -173,6 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'combo': 'Combo Đỉnh Vân Sơn + Chùa Hang (Khứ hồi)',
         'dinh_buffet': 'Combo Đỉnh Vân Sơn + Buffet',
         'combo_buffet': 'Combo Đỉnh + Chùa + Buffet',
+        'dinh_food_night': 'Combo Hoàng Hôn Đỉnh Vân Sơn + Ẩm Thực 17h',
+        'combo_food_night': 'Combo Hoàng Hôn Đỉnh + Chùa Hang + Ẩm Thực 17h',
+        'food': 'Vé Ẩm Thực',
         
         'dinh_sv': 'Vé SV Đỉnh Vân Sơn (Khứ hồi)',
         'chua_sv': 'Vé SV Chùa Hang (Khứ hồi)',
@@ -440,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (summaryRouteText) {
             let labelSuffix = '';
             if (category === 'standard') {
-                if (isNight) labelSuffix = ' (Vé Đêm)';
+                if (isNight) labelSuffix = ' (Vé sau 17h)';
                 else if (route === 'dinh_buffet' || route === 'combo_buffet') {
                     labelSuffix = isWeekend ? ' (Buffet Cuối tuần)' : ' (Buffet Ngày thường)';
                 } else {
@@ -634,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let timeStr = 'Ngày thường';
             
             if (isNight) {
-                timeStr = 'Khung giờ đêm (sau 17h)';
+                timeStr = 'Khung giờ sau 17h';
             } else if (isWeekend && (bookingData.route === 'dinh_buffet' || bookingData.route === 'combo_buffet')) {
                 timeStr = 'Cuối tuần (Thứ 7 / CN)';
             }
